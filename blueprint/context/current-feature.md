@@ -50,7 +50,7 @@ Never accept a step you haven't read. If a diff is too big to review, the step w
 
 - [x] **Step 1 - Canoe scene and rail** - Add `res://scenes/canoe.tscn` as the main scene: grey-box river and banks (CSG/primitives only), a first-person camera that follows a slow Path3D down the water. *Done when:* Play (F5) opens a grey-box 3D river; the view creeps forward by itself; moving the mouse does not rotate the camera.
 
-- [ ] **Step 2 - Reticle and hitscan** - Add a center-following reticle (mouse moves it in screen space) and a `shoot` action on mouse left that raycasts from the camera through the reticle. A debug dummy in the world reacts when hit. *Done when:* the reticle tracks the mouse, the camera still does not turn, and a click marks or removes the dummy.
+- [x] **Step 2 - Reticle and hitscan** - Add a center-following reticle (mouse moves it in screen space) and a `shoot` action on mouse left that raycasts from the camera through the reticle. A debug dummy in the world reacts when hit. *Done when:* the reticle tracks the mouse, the camera still does not turn, and a click marks or removes the dummy.
 
 - [ ] **Step 3 - Natives throw spears** - Place at least two grey-box native stand-ins (capsules/boxes) along the path. While on-screen they throw grey-box `Spear` projectiles toward the camera. Spears that miss despawn. No player death yet. *Done when:* during a Play run you see spears fly at the view from more than one thrower.
 

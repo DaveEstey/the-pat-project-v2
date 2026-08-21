@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene load_steps=14 format=3]
 
 [ext_resource type="Script" path="res://scripts/rail_camera.gd" id="1_rail"]
+[ext_resource type="Script" path="res://scripts/reticle_shoot.gd" id="2_shoot"]
 
 [sub_resource type="Environment" id="EnvGrey"]
 background_mode = 1
@@ -36,6 +37,16 @@ _data = {
 "point_count": 2
 }
 point_count = 2
+
+[sub_resource type="StandardMaterial3D" id="MatDummy"]
+shading_mode = 0
+albedo_color = Color(0.28, 0.28, 0.3, 1)
+
+[sub_resource type="BoxMesh" id="MeshDummy"]
+size = Vector3(1.2, 2.4, 1.2)
+
+[sub_resource type="BoxShape3D" id="ShapeDummy"]
+size = Vector3(1.2, 2.4, 1.2)
 
 [node name="Canoe" type="Node3D"]
 
@@ -78,3 +89,47 @@ surface_material_override/0 = SubResource("MatCanoe")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0)
 current = true
 fov = 70.0
+
+[node name="Dummy" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 1.4, 18)
+
+[node name="Mesh" type="MeshInstance3D" parent="Dummy"]
+mesh = SubResource("MeshDummy")
+surface_material_override/0 = SubResource("MatDummy")
+
+[node name="Body" type="StaticBody3D" parent="Dummy" groups=["hit_dummy"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Dummy/Body"]
+shape = SubResource("ShapeDummy")
+
+[node name="Shooter" type="Node" parent="."]
+script = ExtResource("2_shoot")
+camera = NodePath("../Rail/Follow/Camera3D")
+reticle = NodePath("../Hud/Reticle")
+dummy = NodePath("../Dummy")
+
+[node name="Hud" type="CanvasLayer" parent="."]
+
+[node name="Reticle" type="Control" parent="Hud"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 0
+offset_right = 20.0
+offset_bottom = 20.0
+mouse_filter = 2
+
+[node name="BarH" type="ColorRect" parent="Hud/Reticle"]
+layout_mode = 0
+offset_top = 9.0
+offset_right = 20.0
+offset_bottom = 11.0
+mouse_filter = 2
+color = Color(0.12, 0.12, 0.12, 1)
+
+[node name="BarV" type="ColorRect" parent="Hud/Reticle"]
+layout_mode = 0
+offset_left = 9.0
+offset_right = 11.0
+offset_bottom = 20.0
+mouse_filter = 2
+color = Color(0.12, 0.12, 0.12, 1)
+
