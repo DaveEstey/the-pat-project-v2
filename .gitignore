@@ -1,0 +1,21 @@
+# Godot generated/imported files
+.godot/
+
+# Godot C# / Mono
+.mono/
+
+# JetBrains
+.idea/
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Temporary files
+*.tmp
+*.swp
+*.bak
+
+# Local logs
+logs/

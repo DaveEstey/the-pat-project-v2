@@ -1,0 +1,8 @@
+; Engine configuration file.
+; The Pat Project
+
+config_version=5
+
+[application]
+
+config/name="The Pat Project"
