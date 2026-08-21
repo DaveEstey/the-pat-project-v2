@@ -1,7 +1,7 @@
 # Feature: Canoe native fight
 
 **From build-plan:** feature 1
-**Status:** not started
+**Status:** built, awaiting /complete
 
 ## Goal
 
@@ -56,7 +56,7 @@ Never accept a step you haven't read. If a diff is too big to review, the step w
 
 - [x] **Step 4 - Shoot spears and throwers** - Hitscan destroys a spear on hit. Hitscan on a living native sets `is_alive` false and that native stops throwing. *Done when:* you can click a spear out of the air and click a native so that native throws no more spears.
 
-- [ ] **Step 5 - Death restarts the ride** - Spear overlap with the player camera/body sets `CanoeRun.is_alive` false and `needs_restart` true, then reloads `canoe.tscn`. *Done when:* taking a spear hit returns you to the start of the river; surviving to the end of the rail stops the camera without reloading.
+- [x] **Step 5 - Death restarts the ride** - Spear overlap with the player camera/body sets `CanoeRun.is_alive` false and `needs_restart` true, then reloads `canoe.tscn`. *Done when:* taking a spear hit returns you to the start of the river; surviving to the end of the rail stops the camera without reloading.
 
 ## Files / areas
 

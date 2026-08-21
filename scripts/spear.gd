@@ -10,6 +10,10 @@ var _direction: Vector3 = Vector3.FORWARD
 var _age: float = 0.0
 
 
+func _ready() -> void:
+	area_entered.connect(_on_area_entered)
+
+
 func setup(from: Vector3, toward: Vector3) -> void:
 	global_position = from
 	var offset: Vector3 = toward - from
@@ -25,3 +29,12 @@ func _physics_process(delta: float) -> void:
 	_age += delta
 	if _age >= lifetime:
 		queue_free()
+
+
+func _on_area_entered(area: Area3D) -> void:
+	if not area.is_in_group("player"):
+		return
+	var run := get_tree().current_scene as CanoeRun
+	if run != null:
+		run.die()
+	queue_free()
