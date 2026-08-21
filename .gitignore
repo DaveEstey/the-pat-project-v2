@@ -19,3 +19,8 @@ Desktop.ini
 
 # Local logs
 logs/
+
+# Packaged export output (keep export_presets.cfg when it exists)
+export/
+dist/
+*.dmp
