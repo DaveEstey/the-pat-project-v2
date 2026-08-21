@@ -1,0 +1,80 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://scripts/rail_camera.gd" id="1_rail"]
+
+[sub_resource type="Environment" id="EnvGrey"]
+background_mode = 1
+background_color = Color(0.48, 0.5, 0.52, 1)
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 0.65
+
+[sub_resource type="StandardMaterial3D" id="MatRiver"]
+shading_mode = 0
+albedo_color = Color(0.42, 0.44, 0.46, 1)
+
+[sub_resource type="BoxMesh" id="MeshRiver"]
+size = Vector3(10, 0.3, 90)
+
+[sub_resource type="StandardMaterial3D" id="MatBank"]
+shading_mode = 0
+albedo_color = Color(0.55, 0.55, 0.55, 1)
+
+[sub_resource type="BoxMesh" id="MeshBank"]
+size = Vector3(4, 2, 90)
+
+[sub_resource type="StandardMaterial3D" id="MatCanoe"]
+shading_mode = 0
+albedo_color = Color(0.62, 0.62, 0.62, 1)
+
+[sub_resource type="BoxMesh" id="MeshCanoe"]
+size = Vector3(0.8, 0.25, 2.2)
+
+[sub_resource type="Curve3D" id="CurveRiver"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 1.5, 40, 0, 0, 0, 0, 0, 0, 0, 1.5, -50),
+"point_count": 2
+}
+point_count = 2
+
+[node name="Canoe" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("EnvGrey")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.353553, 0.353553, 0, 0.707107, 0.707107, -0.5, -0.612372, 0.612372, 0, 12, 0)
+light_energy = 0.9
+
+[node name="River" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
+mesh = SubResource("MeshRiver")
+surface_material_override/0 = SubResource("MatRiver")
+
+[node name="BankLeft" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0.8, -5)
+mesh = SubResource("MeshBank")
+surface_material_override/0 = SubResource("MatBank")
+
+[node name="BankRight" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.8, -5)
+mesh = SubResource("MeshBank")
+surface_material_override/0 = SubResource("MatBank")
+
+[node name="Rail" type="Path3D" parent="."]
+curve = SubResource("CurveRiver")
+
+[node name="Follow" type="PathFollow3D" parent="Rail"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 40)
+script = ExtResource("1_rail")
+speed = 2.0
+
+[node name="CanoeHull" type="MeshInstance3D" parent="Rail/Follow"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.35, -0.7)
+mesh = SubResource("MeshCanoe")
+surface_material_override/0 = SubResource("MatCanoe")
+
+[node name="Camera3D" type="Camera3D" parent="Rail/Follow"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0)
+current = true
+fov = 70.0
