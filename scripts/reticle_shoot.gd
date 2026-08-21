@@ -42,15 +42,44 @@ func _shoot() -> void:
 	var origin: Vector3 = camera.project_ray_origin(mouse)
 	var toward: Vector3 = camera.project_ray_normal(mouse)
 	var query := PhysicsRayQueryParameters3D.create(origin, origin + toward * ray_length)
+	query.collide_with_areas = true
 	var hit: Dictionary = camera.get_world_3d().direct_space_state.intersect_ray(query)
 	if hit.is_empty():
 		return
 	var collider := hit.collider as Node
-	if collider != null and dummy != null and (
+	if collider == null:
+		return
+	if dummy != null and (
 		collider == dummy or dummy.is_ancestor_of(collider) or collider.is_in_group("hit_dummy")
 	):
 		dummy.visible = false
 		_disable_dummy_collision()
+		return
+	var spear := _find_spear(collider)
+	if spear != null:
+		spear.queue_free()
+		return
+	var thrower := _find_native(collider)
+	if thrower != null and thrower.is_alive:
+		thrower.is_alive = false
+
+
+func _find_spear(node: Node) -> Spear:
+	var current: Node = node
+	while current != null:
+		if current is Spear:
+			return current as Spear
+		current = current.get_parent()
+	return null
+
+
+func _find_native(node: Node) -> NativeThrower:
+	var current: Node = node
+	while current != null:
+		if current is NativeThrower:
+			return current as NativeThrower
+		current = current.get_parent()
+	return null
 
 
 func _disable_dummy_collision() -> void:

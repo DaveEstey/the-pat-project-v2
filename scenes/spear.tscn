@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/spear.gd" id="1_spear"]
+
+[sub_resource type="StandardMaterial3D" id="MatSpear"]
+shading_mode = 0
+albedo_color = Color(0.32, 0.32, 0.34, 1)
+
+[sub_resource type="BoxMesh" id="MeshSpear"]
+size = Vector3(0.08, 0.08, 1.3)
+
+[sub_resource type="BoxShape3D" id="ShapeSpear"]
+size = Vector3(0.28, 0.28, 1.3)
+
+[node name="Spear" type="Area3D" groups=["spear"]]
+script = ExtResource("1_spear")
+collision_layer = 2
+collision_mask = 0
+monitoring = false
+monitorable = true
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("MeshSpear")
+surface_material_override/0 = SubResource("MatSpear")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ShapeSpear")

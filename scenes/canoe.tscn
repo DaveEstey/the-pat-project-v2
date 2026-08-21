@@ -1,7 +1,8 @@
-[gd_scene load_steps=14 format=3]
+[gd_scene load_steps=15 format=3]
 
 [ext_resource type="Script" path="res://scripts/rail_camera.gd" id="1_rail"]
 [ext_resource type="Script" path="res://scripts/reticle_shoot.gd" id="2_shoot"]
+[ext_resource type="PackedScene" path="res://scenes/native.tscn" id="3_native"]
 
 [sub_resource type="Environment" id="EnvGrey"]
 background_mode = 1
@@ -92,6 +93,13 @@ fov = 70.0
 
 [node name="Dummy" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 1.4, 18)
+
+[node name="Native1" parent="." instance=ExtResource("3_native")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.6, 0, 12)
+
+[node name="Native2" parent="." instance=ExtResource("3_native")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.6, 0, -6)
+
 
 [node name="Mesh" type="MeshInstance3D" parent="Dummy"]
 mesh = SubResource("MeshDummy")

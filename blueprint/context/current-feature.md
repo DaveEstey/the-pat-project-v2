@@ -52,9 +52,9 @@ Never accept a step you haven't read. If a diff is too big to review, the step w
 
 - [x] **Step 2 - Reticle and hitscan** - Add a center-following reticle (mouse moves it in screen space) and a `shoot` action on mouse left that raycasts from the camera through the reticle. A debug dummy in the world reacts when hit. *Done when:* the reticle tracks the mouse, the camera still does not turn, and a click marks or removes the dummy.
 
-- [ ] **Step 3 - Natives throw spears** - Place at least two grey-box native stand-ins (capsules/boxes) along the path. While on-screen they throw grey-box `Spear` projectiles toward the camera. Spears that miss despawn. No player death yet. *Done when:* during a Play run you see spears fly at the view from more than one thrower.
+- [x] **Step 3 - Natives throw spears** - Place at least two grey-box native stand-ins (capsules/boxes) along the path. While on-screen they throw grey-box `Spear` projectiles toward the camera. Spears that miss despawn. No player death yet. *Done when:* during a Play run you see spears fly at the view from more than one thrower.
 
-- [ ] **Step 4 - Shoot spears and throwers** - Hitscan destroys a spear on hit. Hitscan on a living native sets `is_alive` false and that native stops throwing. *Done when:* you can click a spear out of the air and click a native so that native throws no more spears.
+- [x] **Step 4 - Shoot spears and throwers** - Hitscan destroys a spear on hit. Hitscan on a living native sets `is_alive` false and that native stops throwing. *Done when:* you can click a spear out of the air and click a native so that native throws no more spears.
 
 - [ ] **Step 5 - Death restarts the ride** - Spear overlap with the player camera/body sets `CanoeRun.is_alive` false and `needs_restart` true, then reloads `canoe.tscn`. *Done when:* taking a spear hit returns you to the start of the river; surviving to the end of the rail stops the camera without reloading.
 
