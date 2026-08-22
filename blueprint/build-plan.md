@@ -4,7 +4,7 @@
 > Run `/feature` with no number to spec the next unchecked item. Do not
 > renumber completed features. Append new items with the next unused number.
 >
-> Item 1 is complete. Next unchecked item is 2. River clicks.
+> Item 1 and 2 are complete. Next unchecked item is 3. Cover stands.
 
 ## First encounter
 
@@ -12,7 +12,7 @@
 
 ## After the canoe works (rest of the short MVP)
 
-- [ ] 2. **River clicks** - hover-click wildlife/props play audio; one teaching object shows that clicking the world does something
+- [x] 2. **River clicks** - hover-click wildlife/props play audio; one teaching object shows that clicking the world does something
 - [ ] 3. **Cover stands** - two stationary Time Crisis rooms after the boat (duck only while still; peek to shoot)
 - [ ] 4. **Tank rail** - moving vehicle stretch, no cover, shoot enemies and incoming shots
 - [ ] 5. **Boss stand** - still cover fight with weak points, more health, and a tougher read

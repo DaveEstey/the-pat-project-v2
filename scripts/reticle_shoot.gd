@@ -3,7 +3,9 @@ extends Node
 ## Screen-space reticle and click hitscan. Camera stays locked on the rail.
 ## Mask skips the player hurtbox (layer 4) so shots reach spears and natives.
 
-const HIT_MASK: int = 1 | 2
+const RAY_MASK: int = 1 | 2 | 8
+const RETICLE_IDLE := Color(0.12, 0.12, 0.12, 1)
+const RETICLE_HOVER := Color(0.82, 0.62, 0.2, 1)
 
 @export var camera: Camera3D
 @export var reticle: Control
@@ -22,6 +24,7 @@ func _process(_delta: float) -> void:
 		return
 	var half: Vector2 = reticle.size * 0.5
 	reticle.position = get_viewport().get_mouse_position() - half
+	_update_hover_tint()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -49,22 +52,57 @@ func _resolve_exports() -> void:
 		dummy = root.get_node_or_null("%Dummy") as Node3D
 
 
-func _shoot() -> void:
+func _update_hover_tint() -> void:
+	var hovering := _hover_interactable() != null
+	_set_reticle_color(RETICLE_HOVER if hovering else RETICLE_IDLE)
+
+
+func _hover_interactable() -> Node:
+	var hit: Dictionary = _intersect_mouse(RAY_MASK)
+	if hit.is_empty():
+		return null
+	var collider := hit.collider as Node
+	if collider == null:
+		return null
+	return _find_group_ancestor(collider, "interactable")
+
+
+func _set_reticle_color(color: Color) -> void:
+	if reticle == null:
+		return
+	for child: Node in reticle.get_children():
+		var bar := child as ColorRect
+		if bar != null:
+			bar.color = color
+
+
+func _intersect_mouse(mask: int) -> Dictionary:
 	if camera == null:
 		_resolve_exports()
 	if camera == null:
-		return
+		return {}
 	var mouse: Vector2 = get_viewport().get_mouse_position()
 	var origin: Vector3 = camera.project_ray_origin(mouse)
 	var toward: Vector3 = camera.project_ray_normal(mouse)
 	var query := PhysicsRayQueryParameters3D.create(origin, origin + toward * ray_length)
 	query.collide_with_areas = true
-	query.collision_mask = HIT_MASK
-	var hit: Dictionary = camera.get_world_3d().direct_space_state.intersect_ray(query)
+	query.collision_mask = mask
+	return camera.get_world_3d().direct_space_state.intersect_ray(query)
+
+
+func _shoot() -> void:
+	var run := owner as CanoeRun
+	if run != null and not run.is_alive:
+		return
+	var hit: Dictionary = _intersect_mouse(RAY_MASK)
 	if hit.is_empty():
 		return
 	var collider := hit.collider as Node
 	if collider == null:
+		return
+	var clicked: Node = _find_group_ancestor(collider, "interactable")
+	if clicked != null and clicked.has_method("interact"):
+		clicked.call("interact")
 		return
 	if dummy != null and (
 		collider == dummy or dummy.is_ancestor_of(collider) or collider.is_in_group("hit_dummy")

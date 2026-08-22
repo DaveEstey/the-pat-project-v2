@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://dyy3kyosj63ew"]
+
+[ext_resource type="Script" uid="uid://b8interactable01" path="res://scripts/interactable.gd" id="1_interact"]
+
+[sub_resource type="StandardMaterial3D" id="MatClick"]
+shading_mode = 0
+albedo_color = Color(0.45, 0.48, 0.42, 1)
+
+[sub_resource type="BoxMesh" id="MeshClick"]
+size = Vector3(0.9, 0.9, 0.9)
+
+[sub_resource type="BoxShape3D" id="ShapeClick"]
+size = Vector3(0.9, 0.9, 0.9)
+
+[node name="RiverClick" type="Node3D" groups=["interactable"]]
+script = ExtResource("1_interact")
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0)
+mesh = SubResource("MeshClick")
+surface_material_override/0 = SubResource("MatClick")
+
+[node name="Body" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0)
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Body"]
+shape = SubResource("ShapeClick")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
