@@ -4,8 +4,8 @@
 > Run `/feature` with no number to spec the next unchecked item. Do not
 > renumber completed features. Append new items with the next unused number.
 >
-> Items 1 and 2 are a superseded grey-box experiment. Next unchecked item is
-> 12. Tank rail ride.
+> Items 1 and 2 are a superseded grey-box experiment. Item 12 is complete.
+> Next unchecked item is 13. Click-to-shoot.
 
 ## Prior experiment (shipped, superseded)
 
@@ -14,7 +14,7 @@
 
 ## Tank ride MVP
 
-- [ ] 12. **Tank rail ride** - locked first-person camera on a tank that always moves; POLYGON WAR countryside into trenches into a ruined town; small HP readout; no combat yet
+- [x] 12. **Tank rail ride** - locked first-person camera on a tank that always moves; POLYGON WAR countryside into trenches into a ruined town; small HP readout; no combat yet
 - [ ] 13. **Click-to-shoot** - mouse-left reticle hitscan on the moving tank (same click forever)
 - [ ] 14. **Soldiers and slow shots** - soldiers fire readable projectiles; shoot the shot or the shooter; three hits reload the whole ride
 - [ ] 15. **Flavor shootables** - barrels, crates, or signs along the rail react to a shot (mostly audio)
