@@ -31,11 +31,18 @@ Match the layout in the product `README.md`:
 - `resources/` - custom resources and game data (`.tres`, resource scripts)
 - `shaders/` - Godot shaders
 - `assets/` - art, audio, fonts, models, textures, UI art
+- `assets/POLYGON WAR/` - Synty-style WWII / jungle pack. This is the asset
+  library for the game. Subfolders hold the usable files.
 - `addons/` - Godot plugins
 - `docs/` - design and technical notes
 
-> TODO: confirm 2D vs 3D, main scene path, and input map once those exist in
-> `project.godot`.
+> 3D. Main scene: `res://scenes/tank.tscn`. Shoot: mouse left (`shoot` in
+> `project.godot`).
+
+Treat `assets/POLYGON WAR/` as a library, not source. Do not enumerate,
+summarize, or load the whole pack into context. When a task needs a mesh,
+texture, or sound, search that folder by name or subfolder and stop. Project-wide
+analysis stays on scripts, scenes, resources, config, and gameplay.
 
 ## Naming
 

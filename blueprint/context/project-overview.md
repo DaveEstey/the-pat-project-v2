@@ -1,79 +1,86 @@
 # The Pat Project - Project Overview
 
-> 3D first-person on-rails jungle shooter. Active work is only the canoe native fight.
+> Short 3D first-person on-rails WWII tank ride. Always moving. Click to shoot.
+> Next work is the tank rail itself.
 
 ## Problem
 
-The long-term game is a short, somber on-rails run (canoe, cover stands, tank,
-boss, silent secrets). That slice is not the current problem.
+The product is a short, somber on-rails shooter: you sit in a tank that never
+stops, rolling farm and hedges into trenches into a ruined town, and you click
+to shoot.
 
-Right now we only need one playable encounter: a canoe ride where natives throw
-spears, you shoot the spear or the thrower, and death restarts the ride. Nothing
-else ships until that loop works.
+A grey-box canoe fight and river clicks already exist in the repo. They are a
+prior experiment. Do not keep the canoe as the main scene once the tank ride
+exists.
 
 ## Users
 
-- **You (now)** - play the canoe scene in the Godot editor.
-- **You, then a friend (later)** - finish the short game, then send a Windows
-  download. No accounts or access tiers.
+- **You (now)** - play in the Godot editor and build the tank ride.
+- **You, then a friend (later)** - Windows zip if export stays simple. No
+  accounts or access tiers.
 - Not a live service, web game, or Steam store page in this pass.
 
 ## Features
 
-Headline for `/feature`: **1. Canoe native fight**. Items 2–11 wait until that
-encounter is playable.
+Headline for `/feature`: **12. Tank rail ride**. Items 1 and 2 are complete and
+superseded. Do not spec cover stands or other dropped items.
 
-1. **Canoe native fight** - locked first-person camera rides the river; natives throw spears; shoot the spear or the thrower; death restarts the ride
-2. **River clicks** - hover-click wildlife/props play audio; one teaching object shows the world is clickable
-3. **Cover stands** - two stationary Time Crisis rooms after the boat
-4. **Tank rail** - moving vehicle stretch, no cover, shoot threats
-5. **Boss stand** - still cover fight with weak points and more health
-6. **Silent secrets** - spare-natives flag helps at the boss; idol unlocks a secret ending
-7. **Continues** - section restart with a continue limit, then full-run game over
-8. **Windows download** - export a Windows build you can zip and send
-9. **Puzzle beats** - hatch/latch clicks that change a route
-10. **More branches** - extra silent routes beyond natives + idol
-11. **Share polish** - icon, zip layout, friend-proof README for the download
+1. **Canoe native fight** (done, superseded) - grey-box river rail, natives, spears, 3 HP restart
+2. **River clicks** (done, superseded) - hover-click props on the canoe; teaching object
+12. **Tank rail ride** - locked first-person camera on a tank that always moves; POLYGON WAR countryside into trenches into a ruined town; small HP readout; no combat yet
+13. **Click-to-shoot** - mouse-left reticle hitscan on the moving tank; click is always shoot
+14. **Soldiers and slow shots** - soldiers fire readable projectiles; shoot the shot or the shooter; three hits reload the whole ride
+15. **Flavor shootables** - barrels, crates, or signs react to a shot (mostly audio)
+16. **Boss stretch** - denser fight on the same moving rail in the town or at a bunker
+17. **Windows download** - export a Windows zip if it stays simple; skip or defer if export becomes a project
+
+Not in this MVP: cover / duck / still rooms, continues, silent secrets, puzzles,
+extra branches, canoe-as-product.
 
 ## Data model
 
-Nothing is persisted to disk for the canoe. In-run state only.
+Nothing is persisted to disk. In-run state only.
 
-### CanoeRun (now)
+### TankRun (target for features 12-16)
 
-- `is_alive` (bool) - false when a spear hits the player
-- `needs_restart` (bool) - true after death; reloading the canoe scene clears it
-- No health bar, no continue count, no save file
+Reuse the canoe health rules on the tank scene. Do not add continues.
 
-### Native (now, scene/runtime)
+- `health` (int) - starts at 3; each projectile hit subtracts 1
+- `is_alive` (bool) - false when health reaches 0
+- `needs_restart` (bool) - true after a fatal fail; full tank-ride reload clears it
 
-- `is_alive` (bool) - false if the player shot this thrower
-- Throws `Spear` instances at the player while on-screen
+### Soldier (feature 14)
 
-### Spear (now, scene/runtime)
+- `is_alive` (bool) - false after a successful hitscan on this shooter
+- Fires slow, visible projectiles while alive and on-screen
 
-- In-flight projectile. Destroyed if shot. Kills the player on hit.
-- Shooting the spear or its thrower both count as a successful defense
+### SlowProjectile (feature 14)
 
-### RunProgress (later, do not implement in feature 1)
+- In-flight, readable war object (grenade, panzerfaust, mortar). Not a tiny
+  bullet. Destroyed if shot. Each player hit subtracts 1 health.
 
-- `current_section` (enum/string) - canoe, cover_1, cover_2, tank, boss
-- `continues_remaining` (int)
-- `spared_natives` (bool) - true if no native was killed on the canoe
-- `has_idol` (bool) - true if the idol was shot/collected
+### FlavorShootable (feature 15)
 
-> Lock `spared_natives` and `has_idol` as flags for later features. Feature 1
-> does not write them. Click is shoot-only in the canoe; interact-vs-shoot comes
-> with River clicks.
+- Shot with the same hitscan as combat. Plays audio or a small world reaction.
+  Not a second input action. No inventory pickup.
+
+### Canoe leftovers (do not extend)
+
+`CanoeRun`, `Native`, `Spear`, and `Interactable` exist in the current canoe
+scenes. Treat them as the old experiment. Feature 12 replaces the product ride.
+Do not add `spared_natives`, `has_idol`, `current_section`, or
+`continues_remaining`.
 
 ## Tech stack
 
 - **Godot 4** - engine (`config_version=5`; editor reported 4.7)
 - **GDScript (typed)** - gameplay
-- **3D scenes** - canoe, natives, spears, rail camera
-- **First-person rail camera** - locked view, creeps forward, no free look
-- **Reticle + click-to-shoot** - combat input
-- **`assets/`** - WWII pack when present; placeholders allowed
+- **3D rail** - locked first-person camera, always moving, no free look
+- **Reticle + click-to-shoot** - one action, `shoot` (mouse left)
+- **`assets/POLYGON WAR/`** - WWII pack library; search by name, do not dump
+  the pack into context
+- **Main scene today:** `res://scenes/canoe.tscn` until feature 12 ships a tank
+  ride and points `project.godot` at it
 - **Editor Play (F5)** - how we verify; no test runner yet
 
 ## Monetization
@@ -82,25 +89,27 @@ Not in this project. Hobby / send-a-build.
 
 ## UI/UX
 
-Dark, slow river. Methodical, not chaotic. No cover HUD, no inventory, no
-continue screen for the canoe.
+Somber WWII ground war. Slow tank. Methodical, not chaotic. Click to shoot.
+Small HP readout. Hover may tint the reticle on a valid shot target. No cover
+prompt, no inventory, no continue screen.
 
-- `res://scenes/` canoe encounter (main scene once set in `project.godot`) - the ride, reticle, shoot, die, restart
-- Later: interact cursor on wildlife, hold-to-duck in still stands, small continue display, secret ending beat
-
-> TODO: exact scene path and input-map names once they exist in `project.godot`.
+- `res://scenes/canoe.tscn` - leftover experiment (still the main scene)
+- Tank ride scene - named in feature 12; becomes the main scene
 
 ## Deployment
 
-- **Now:** Godot editor only. No export work until the canoe fight is playable.
-- **Later:** Windows executable, zip, send a link.
+- **Now:** Godot editor. No export required for items 12-16.
+- **Item 17:** Windows executable, zip, send a link, only if export stays
+  simple. If it fights the project, stay editor-only.
+- Repo: `DaveEstey/the-pat-project-v2`
 - No Render/Vercel, no server, no env vars, no database.
 
 ## Open questions
 
-- Cover button (hold-to-duck) is assumed in later cover stands, not specified as a key.
-- Continue count for item 7 is not in the build-plan line; the earlier default was 3.
-- `coding-standards.md` still has a 2D vs 3D TODO; the plans lock **3D**.
-- Scene names, rail path, and spear hit rules (one hit = death) are feature-spec detail, not plan conflicts.
-
-No disagreement on build order: item 1 is the only active feature.
+- Exact projectile (grenade vs panzerfaust vs mortar) is an example list, not
+  locked. Feature 14 should pick one readable object.
+- Tank ride scene path is not named yet (`res://scenes/tank.tscn` is a likely
+  default for feature 12).
+- Hover tint is optional ("may tint"), not a required HUD system.
+- Item 17 may be skipped if Windows export becomes its own project. That is
+  already allowed by the build plan.

@@ -24,6 +24,10 @@ New here? `blueprint/README.md` explains the whole workflow.
 - `blueprint/context/ai-interaction.md` - how to work with the user on this project
 - `blueprint/context/current-feature.md` - the one feature, fix, or rollback being built right now
 
+Game assets live in `assets/POLYGON WAR/` (subfolders). Treat that tree as a
+library, not source: do not list or summarize the pack unless a task needs a
+specific file. Search by name when you need one.
+
 ## Workflow
 
 Build one feature, fix, or rollback at a time, behind review gates. Each step's instructions
