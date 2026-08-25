@@ -1,6 +1,6 @@
 extends PathFollow3D
 
-## Moves the first-person camera along the river. No look, no steer.
+## Moves the first-person camera along a Path3D. No look, no steer.
 
 @export var speed: float = 2.0
 

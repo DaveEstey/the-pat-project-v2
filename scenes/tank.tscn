@@ -1,0 +1,155 @@
+[gd_scene format=3 uid="uid://c1c84lgd2em53"]
+
+[ext_resource type="Script" uid="uid://c3lofmoqlga0a" path="res://scripts/rail_camera.gd" id="1_rail"]
+[ext_resource type="Script" uid="uid://btankrunscript1" path="res://scripts/tank_run.gd" id="2_run"]
+[ext_resource type="PackedScene" uid="uid://bg14aw0u552l8" path="res://assets/POLYGON WAR/FBX/SM_Veh_American_Tank_01.glb" id="3_tank"]
+[ext_resource type="PackedScene" uid="uid://cln638molobnn" path="res://assets/POLYGON WAR/FBX/SM_Env_Road_Dirt_Straight_01.glb" id="4_road"]
+[ext_resource type="PackedScene" uid="uid://d1eoih2ni4wdo" path="res://assets/POLYGON WAR/FBX/SM_Env_Hedge_01.glb" id="5_hedge"]
+[ext_resource type="PackedScene" uid="uid://cu5clgji50rlk" path="res://assets/POLYGON WAR/FBX/SM_Env_FarmRows_01.glb" id="6_rows"]
+[ext_resource type="PackedScene" uid="uid://cj56dn3pj6sre" path="res://assets/POLYGON WAR/FBX/SM_Bld_Barn_01.glb" id="7_barn"]
+[ext_resource type="PackedScene" uid="uid://b64tsrmtprc1l" path="res://assets/POLYGON WAR/FBX/SM_Env_Tree_Pine_01.glb" id="8_pine"]
+[ext_resource type="PackedScene" uid="uid://cbl7sq02w42dp" path="res://assets/POLYGON WAR/FBX/SM_Env_Trench_Straight_01.glb" id="9_trench"]
+[ext_resource type="PackedScene" uid="uid://t4q2ja3pkvlt" path="res://assets/POLYGON WAR/FBX/SM_Env_Sandbag_Wall_01.glb" id="10_bags"]
+[ext_resource type="PackedScene" uid="uid://8r2fku2dojew" path="res://assets/POLYGON WAR/FBX/SM_Env_Dirt_Mound_01.glb" id="11_mound"]
+[ext_resource type="PackedScene" uid="uid://co6n8adu076x5" path="res://assets/POLYGON WAR/FBX/SM_Bld_TownHouse_01.glb" id="12_house"]
+[ext_resource type="PackedScene" uid="uid://dbwwj8hnoolye" path="res://assets/POLYGON WAR/FBX/SM_Bld_Bunker_01.glb" id="13_bunker"]
+
+[sub_resource type="Environment" id="EnvGrey"]
+background_mode = 1
+background_color = Color(0.32, 0.31, 0.3, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.92, 0.9, 0.86, 1)
+ambient_light_energy = 0.38
+
+[sub_resource type="BoxMesh" id="MeshGround"]
+size = Vector3(52, 0.3, 100)
+
+[sub_resource type="StandardMaterial3D" id="MatGround"]
+shading_mode = 0
+albedo_color = Color(0.46, 0.47, 0.45, 1)
+
+[sub_resource type="Curve3D" id="CurveRail"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0.2, 40, 0, 0, 0, 0, 0, 0, 0, 0.2, -50),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[node name="Tank" type="Node3D"]
+script = ExtResource("2_run")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("EnvGrey")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.353553, 0.353553, 0, 0.707107, 0.707107, -0.5, -0.612372, 0.612372, 0, 12, 0)
+light_energy = 0.48
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
+mesh = SubResource("MeshGround")
+surface_material_override/0 = SubResource("MatGround")
+
+[node name="Rail" type="Path3D" parent="."]
+curve = SubResource("CurveRail")
+
+[node name="Follow" type="PathFollow3D" parent="Rail"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 40)
+script = ExtResource("1_rail")
+speed = 2.0
+
+[node name="Hull" parent="Rail/Follow" instance=ExtResource("3_tank")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Rail/Follow"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 0.99, 0.141, 0, -0.141, 0.99, 0, 3.55, 0.85)
+current = true
+fov = 70.0
+
+[node name="Farm" type="Node3D" parent="."]
+
+[node name="Road1" parent="Farm" instance=ExtResource("4_road")]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0.16, 34)
+
+[node name="Road2" parent="Farm" instance=ExtResource("4_road")]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0.16, 22)
+
+[node name="Road3" parent="Farm" instance=ExtResource("4_road")]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0.16, 10)
+
+[node name="HedgeL1" parent="Farm" instance=ExtResource("5_hedge")]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, -22, 0.16, 36)
+
+[node name="HedgeL2" parent="Farm" instance=ExtResource("5_hedge")]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, -22, 0.16, 28)
+
+[node name="HedgeR1" parent="Farm" instance=ExtResource("5_hedge")]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 22, 0.16, 32)
+
+[node name="HedgeR2" parent="Farm" instance=ExtResource("5_hedge")]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 22, 0.16, 18)
+
+[node name="RowsL" parent="Farm" instance=ExtResource("6_rows")]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, -20, 0.16, 24)
+
+[node name="RowsR" parent="Farm" instance=ExtResource("6_rows")]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 20, 0.16, 14)
+
+[node name="Barn" parent="Farm" instance=ExtResource("7_barn")]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, -20, 0.16, 12)
+
+[node name="Pine1" parent="Farm" instance=ExtResource("8_pine")]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 23, 0.16, 38)
+
+[node name="Pine2" parent="Farm" instance=ExtResource("8_pine")]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, -23, 0.16, 30)
+
+[node name="Pine3" parent="Farm" instance=ExtResource("8_pine")]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 22, 0.16, 8)
+
+[node name="Trench" type="Node3D" parent="."]
+
+[node name="Trench1" parent="Trench" instance=ExtResource("9_trench")]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, -20, 0.16, 2)
+
+[node name="Trench2" parent="Trench" instance=ExtResource("9_trench")]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, -20, 0.16, -4)
+
+[node name="Trench3" parent="Trench" instance=ExtResource("9_trench")]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, -20, 0.16, -10)
+
+[node name="BagsR1" parent="Trench" instance=ExtResource("10_bags")]
+transform = Transform3D(0, 0, 100, 0, 100, 0, -100, 0, 0, 22, 0.16, 1)
+
+[node name="BagsR2" parent="Trench" instance=ExtResource("10_bags")]
+transform = Transform3D(0, 0, 100, 0, 100, 0, -100, 0, 0, 22, 0.16, -6)
+
+[node name="BagsL" parent="Trench" instance=ExtResource("10_bags")]
+transform = Transform3D(0, 0, 100, 0, 100, 0, -100, 0, 0, -22, 0.16, -2)
+
+[node name="MoundR" parent="Trench" instance=ExtResource("11_mound")]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 18, 0.16, -8)
+
+[node name="MoundL" parent="Trench" instance=ExtResource("11_mound")]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, -18, 0.16, 4)
+
+[node name="Town" type="Node3D" parent="."]
+
+[node name="TownHouse" parent="Town" instance=ExtResource("12_house")]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, -19, 0.16, -28)
+
+[node name="Bunker" parent="Town" instance=ExtResource("13_bunker")]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 22, 0.16, -42)
+
+[node name="Hud" type="CanvasLayer" parent="."]
+
+[node name="HealthLabel" type="Label" parent="Hud"]
+unique_name_in_owner = true
+offset_left = 16.0
+offset_top = 12.0
+offset_right = 160.0
+offset_bottom = 40.0
+theme_override_colors/font_color = Color(0.18, 0.18, 0.18, 1)
+text = "HP 3/3"
+mouse_filter = 2

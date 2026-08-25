@@ -5,60 +5,68 @@
 
 ## 1. Problem - What problem are we solving?
 
-The Pat Project is a 3D first-person on-rails shooter. The long-term slice is a
-short, somber jungle run: canoe, two cover stands, a tank stretch, a boss, and
-silent secrets. Dark and methodical, not chaotic.
+The Pat Project is a short 3D first-person on-rails WWII shooter. You ride a
+tank that never stops. The view creeps forward through countryside, trenches,
+and a ruined town. Click to shoot. Dark and methodical, not chaotic.
 
-**Right now the only problem we are solving is the first encounter.** Get a
-playable canoe ride with a native spear fight that you can finish, fail, and
-restart. Nothing else ships until that loop works.
+A grey-box canoe fight and river clicks already shipped. They are a prior
+experiment. The product is now this tank ride, dressed with the POLYGON WAR
+pack.
 
 ## 2. Users - Who is this for?
 
-- **Now:** you, playing in the Godot editor.
-- **After the canoe works:** keep building the rest of the short game, then a
-  Windows download for a friend.
+- **Now:** you, playing in the Godot editor and building the ride.
+- **Later:** a Windows zip for a friend, if export stays simple.
 - Not a live service, not a web game, not Steam for this pass.
 
-## 3. Features - What does the first encounter need?
+## 3. Features
 
-### Now (build this only)
+### Shipped (superseded as the product)
 
-- First-person locked camera on a canoe. The view creeps forward; you do not
-  look around freely.
-- Reticle. Click to shoot.
-- Natives throw spears. Shoot the **spear or the thrower**, or you die.
-- On death, restart the canoe ride. No continue economy yet.
-- The camera keeps moving. It does not wait for a wave clear.
-- Enough jungle/WWII scenery to read the scene. Use the asset pack in `assets/`
-  when it is present; placeholders are fine until then.
+- Grey-box canoe native fight and river flavor clicks. Keep them in git
+  history. Do not keep them as the main scene once the tank ride exists.
 
-### Later (the small MVP, after the canoe is functional)
+### Now (this MVP)
 
-Keep this as the target shape. Do not spec or build it until encounter 1 works.
+- Locked first-person camera on a tank. Always moving. No look, no steer,
+  no duck, no parked cover rooms.
+- One rail: farm and hedges, then trenches and sandbags, then a ruined town.
+  Terrain comes from `assets/POLYGON WAR/`.
+- Reticle. Mouse left is always shoot.
+- Soldiers along the path fire slow, visible projectiles (grenade, panzerfaust,
+  mortar; not tiny bullets). Shoot the projectile or the thrower.
+- Flavor props (barrels, crates, signs) also take a shot. Mostly audio or a
+  small world reaction. Same click. No inventory.
+- **3 health.** A hit subtracts 1. At 0, reload the whole tank ride.
+- Boss stretch on the same rail in the town or at a bunker: denser, still
+  moving, still the same click.
+- Editor Play (F5) is how we verify. Windows zip last, only if it does not
+  complicate the ride.
 
-- River flavor clicks (wildlife/props, mostly audio, one teaching object)
-- Two still Time Crisis cover fights after the boat
-- Tank rail (moving, no cover)
-- Boss stand (weak points, more health)
-- Silent flags: spare natives (help at boss), idol (secret ending treasure)
-- Limited continues, then full-run game over
-- Windows zip / download link
+### Later (not this MVP)
+
+- Continues / section restart
+- Silent secrets (spare, idol)
+- Cover / hold-to-duck / still rooms
+- Puzzle hatches, extra branches
+- Steam, web, level select
 
 ## 4. Data - What are we storing?
 
-**Now:** nothing persistent. In-run only, if needed (alive / dead / restart).
+**Now (in-run, not saved):** `health` (int, max 3), `is_alive`,
+`needs_restart`.
 
-**Later:** current section, continues, `spared_natives`, `has_idol`. No accounts,
-no server, no visible inventory.
+**Not now:** `current_section`, `continues_remaining`, `spared_natives`,
+`has_idol`. No accounts, no server, no inventory.
 
 ## 5. Tech - What stack are we using?
 
 - Godot 4 (`config_version=5`; editor reported 4.7)
 - GDScript, typed
-- 3D, first-person rail camera, reticle shots
-- WWII assets in `assets/` when uploaded
-- Verify by playing in the editor (Play / F5)
+- 3D, first-person rail camera, reticle hitscan
+- Asset library: `assets/POLYGON WAR/` (search by name, do not dump the pack)
+- Main scene becomes the tank ride once it exists
+- Verify in the editor (Play / F5)
 
 ## 6. Monetize - How will this make money?
 
@@ -66,31 +74,31 @@ None.
 
 ## 7. UI/UX - How should this look and feel?
 
-**Now:** dark, slow river. Gun reticle. Click to fire. No cover, no inventory
-HUD, no menu beyond restarting the ride.
-
-**Later:** interact cursor on wildlife, hold-to-duck in still stands, small
-continue display, secret ending beat if the idol was collected.
+Somber WWII ground war. Slow tank. Gun reticle. Click to fire. Small HP
+readout. Hover may tint the reticle on a valid shot target. No cover prompt,
+no inventory, no continue screen.
 
 ## 8. Deployment - Where and how will this ship?
 
-**Now:** run from the Godot editor. No export work until the canoe fight is
-playable.
+- **Now:** Godot editor.
+- **If it stays simple:** Windows executable, zip, send a link.
+- If export fights us, stay editor-only until the ride is done.
+- Repo: `DaveEstey/the-pat-project-v2`
+- No Render/Vercel, no server.
 
-**Later:** Windows executable, zip, send a link. No Render/Vercel, no server.
+## Explicit non-goals (this MVP)
 
-## Explicit non-goals (until the canoe works)
-
-- Cover, tank, boss, second rooms
-- River flavor clicks and teaching objects
-- Spare-natives flag and idol
-- Continues / game over across a full run
-- Inventory UI, extra branches, hatch puzzles
-- Driving the boat, camera look, Steam, web, level select
-- Windows export
+- Canoe as the product start
+- Time Crisis duck / peek / still stands
+- A second click mode (interact vs shoot)
+- Continues and full-run game over
+- Silent secrets, puzzles, extra branches
+- Driving the tank, camera look, Steam, web, level select
 
 ## Assumptions
 
-- Same click will later mean enemy = shot and prop = interact. For this
-  encounter, click is only shoot.
-- Canoe death is a full scene restart, not a continue screen.
+- One click: shoot. Flavor props are shootable, not a second action.
+- Incoming attacks are slow enough to read and shoot. Hitscan bullets at
+  the player are out.
+- Three hits restart the whole ride. That is not a continue screen.
+- The POLYGON WAR pack is the look. Do not invent a second art style.
