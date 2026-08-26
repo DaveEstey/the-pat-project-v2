@@ -13,6 +13,8 @@
 [ext_resource type="PackedScene" uid="uid://8r2fku2dojew" path="res://assets/POLYGON WAR/FBX/SM_Env_Dirt_Mound_01.glb" id="11_mound"]
 [ext_resource type="PackedScene" uid="uid://co6n8adu076x5" path="res://assets/POLYGON WAR/FBX/SM_Bld_TownHouse_01.glb" id="12_house"]
 [ext_resource type="PackedScene" uid="uid://dbwwj8hnoolye" path="res://assets/POLYGON WAR/FBX/SM_Bld_Bunker_01.glb" id="13_bunker"]
+[ext_resource type="Script" uid="uid://btankshootgd01" path="res://scripts/tank_shoot.gd" id="14_shoot"]
+[ext_resource type="Script" uid="uid://bshotdummygd01" path="res://scripts/shot_dummy.gd" id="15_dummy"]
 
 [sub_resource type="Environment" id="EnvGrey"]
 background_mode = 1
@@ -27,6 +29,16 @@ size = Vector3(52, 0.3, 100)
 [sub_resource type="StandardMaterial3D" id="MatGround"]
 shading_mode = 0
 albedo_color = Color(0.46, 0.47, 0.45, 1)
+
+[sub_resource type="BoxMesh" id="MeshDummy"]
+size = Vector3(1.6, 3.2, 1.6)
+
+[sub_resource type="StandardMaterial3D" id="MatDummy"]
+shading_mode = 0
+albedo_color = Color(0.28, 0.28, 0.3, 1)
+
+[sub_resource type="BoxShape3D" id="ShapeDummy"]
+size = Vector3(1.6, 3.2, 1.6)
 
 [sub_resource type="Curve3D" id="CurveRail"]
 _data = {
@@ -68,6 +80,23 @@ current = true
 fov = 70.0
 
 [node name="Farm" type="Node3D" parent="."]
+
+[node name="Dummy" type="Node3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1.6, 16)
+script = ExtResource("15_dummy")
+groups = ["shot_target"]
+
+[node name="Mesh" type="MeshInstance3D" parent="Dummy"]
+mesh = SubResource("MeshDummy")
+surface_material_override/0 = SubResource("MatDummy")
+
+[node name="Body" type="StaticBody3D" parent="Dummy" groups=["shot_target"]]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Dummy/Body"]
+shape = SubResource("ShapeDummy")
 
 [node name="Road1" parent="Farm" instance=ExtResource("4_road")]
 transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0.16, 34)
@@ -153,3 +182,34 @@ offset_bottom = 40.0
 theme_override_colors/font_color = Color(0.18, 0.18, 0.18, 1)
 text = "HP 3/3"
 mouse_filter = 2
+
+[node name="Reticle" type="Control" parent="Hud"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 20.0
+offset_bottom = 20.0
+mouse_filter = 2
+
+[node name="BarH" type="ColorRect" parent="Hud/Reticle"]
+layout_mode = 0
+offset_top = 9.0
+offset_right = 20.0
+offset_bottom = 11.0
+mouse_filter = 2
+color = Color(0.12, 0.12, 0.12, 1)
+
+[node name="BarV" type="ColorRect" parent="Hud/Reticle"]
+layout_mode = 0
+offset_left = 9.0
+offset_right = 11.0
+offset_bottom = 20.0
+mouse_filter = 2
+color = Color(0.12, 0.12, 0.12, 1)
+
+[node name="Shooter" type="Node" parent="."]
+script = ExtResource("14_shoot")
+camera = NodePath("%Camera3D")
+reticle = NodePath("%Reticle")
+dummy = NodePath("%Dummy")
