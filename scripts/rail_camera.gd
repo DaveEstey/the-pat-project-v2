@@ -6,7 +6,7 @@ extends PathFollow3D
 
 func _ready() -> void:
 	loop = false
-	rotation_mode = ROTATION_NONE
+	rotation_mode = ROTATION_Y
 	progress_ratio = 0.0
 
 

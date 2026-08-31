@@ -7,7 +7,8 @@
 
 The Pat Project is a short 3D first-person on-rails WWII shooter. You ride a
 tank that never stops. The view creeps forward through countryside, trenches,
-and a ruined town. Click to shoot. Dark and methodical, not chaotic.
+and a ruined town, then turns into a bunker approach. Click to shoot. Dark and
+methodical, not chaotic.
 
 A grey-box canoe fight and river clicks already shipped. They are a prior
 experiment. The product is now this tank ride, dressed with the POLYGON WAR
@@ -30,16 +31,18 @@ pack.
 
 - Locked first-person camera on a tank. Always moving. No look, no steer,
   no duck, no parked cover rooms.
-- One rail: farm and hedges, then trenches and sandbags, then a ruined town.
-  Terrain comes from `assets/POLYGON WAR/`.
+- One rail: farm and hedges, then trenches and sandbags, then a ruined town
+  approach, then a right-angle turn into a bunker stretch. Terrain comes from
+  `assets/POLYGON WAR/`.
 - Reticle. Mouse left is always shoot.
 - Soldiers along the path fire slow, visible projectiles (grenade, panzerfaust,
-  mortar; not tiny bullets). Shoot the projectile or the thrower.
+  mortar; not tiny bullets). Shoot the projectile or the thrower. Combat
+  activates in small waves at checkpoints so pressure builds in sequence.
 - Flavor props (barrels, crates, signs) also take a shot. Mostly audio or a
   small world reaction. Same click. No inventory.
 - **3 health.** A hit subtracts 1. At 0, reload the whole tank ride.
-- Boss stretch on the same rail in the town or at a bunker: denser, still
-  moving, still the same click.
+- Boss stretch is the denser bunker fight after the turn, still moving, still
+  the same click.
 - Editor Play (F5) is how we verify. Windows zip last, only if it does not
   complicate the ride.
 
