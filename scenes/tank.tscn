@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://dbwwj8hnoolye" path="res://assets/POLYGON WAR/FBX/SM_Bld_Bunker_01.glb" id="13_bunker"]
 [ext_resource type="Script" uid="uid://btankshootgd01" path="res://scripts/tank_shoot.gd" id="14_shoot"]
 [ext_resource type="Script" uid="uid://bshotdummygd01" path="res://scripts/shot_dummy.gd" id="15_dummy"]
+[ext_resource type="PackedScene" uid="uid://csoldierscene1" path="res://scenes/soldier.tscn" id="18_soldier"]
 
 [sub_resource type="Environment" id="EnvGrey"]
 background_mode = 1
@@ -39,6 +40,9 @@ albedo_color = Color(0.28, 0.28, 0.3, 1)
 
 [sub_resource type="BoxShape3D" id="ShapeDummy"]
 size = Vector3(1.6, 3.2, 1.6)
+
+[sub_resource type="BoxShape3D" id="ShapePlayer"]
+size = Vector3(1.8, 1.8, 2.4)
 
 [sub_resource type="Curve3D" id="CurveRail"]
 _data = {
@@ -78,6 +82,17 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 0.99, 0.141, 0, -0.141, 0.99, 0, 3.55, 0.85)
 current = true
 fov = 70.0
+
+[node name="Hurtbox" type="Area3D" parent="Rail/Follow" groups=["player"]]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.55, 0.85)
+collision_layer = 4
+collision_mask = 2
+monitoring = true
+monitorable = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Rail/Follow/Hurtbox"]
+shape = SubResource("ShapePlayer")
 
 [node name="Farm" type="Node3D" parent="."]
 
@@ -162,6 +177,14 @@ transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 18, 0.16, -8)
 
 [node name="MoundL" parent="Trench" instance=ExtResource("11_mound")]
 transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, -18, 0.16, 4)
+
+[node name="Soldiers" type="Node3D" parent="."]
+
+[node name="Soldier1" parent="Soldiers" instance=ExtResource("18_soldier")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.16, 0)
+
+[node name="Soldier2" parent="Soldiers" instance=ExtResource("18_soldier")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0.16, -8)
 
 [node name="Town" type="Node3D" parent="."]
 

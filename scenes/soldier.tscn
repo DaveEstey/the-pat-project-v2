@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://bnl7i5j8vxep7"]
+
+[ext_resource type="Script" uid="uid://bsoldiergd0001" path="res://scripts/soldier.gd" id="1_soldier"]
+[ext_resource type="PackedScene" uid="uid://cslowprojscn1" path="res://scenes/slow_projectile.tscn" id="2_proj"]
+[ext_resource type="PackedScene" uid="uid://cnl00vfqtrgso" path="res://assets/POLYGON WAR/Characters/Character_German_Soldier_01.glb" id="3_mesh"]
+
+[sub_resource type="CapsuleShape3D" id="ShapeSoldier"]
+radius = 0.4
+height = 1.8
+
+[node name="Soldier" type="Node3D" groups=["shot_target"]]
+script = ExtResource("1_soldier")
+projectile_scene = ExtResource("2_proj")
+muzzle = NodePath("Muzzle")
+
+[node name="Visual" parent="." instance=ExtResource("3_mesh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="Body" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Body"]
+shape = SubResource("ShapeSoldier")
+
+[node name="Muzzle" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.45, 0.35)
+
+[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+aabb = AABB(-0.6, -1.0, -0.6, 1.2, 2.0, 1.2)

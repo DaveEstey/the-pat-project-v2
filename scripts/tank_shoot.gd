@@ -2,7 +2,7 @@ extends Node
 
 ## Screen-space reticle and click hitscan on the tank ride. Camera stays locked.
 
-const RAY_MASK: int = 8
+const RAY_MASK: int = 2 | 8
 const RETICLE_IDLE := Color(0.12, 0.12, 0.12, 1)
 const RETICLE_HOVER := Color(0.82, 0.62, 0.2, 1)
 

@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://cslowprojscn1"]
+
+[ext_resource type="Script" uid="uid://bslowprojgd01" path="res://scripts/slow_projectile.gd" id="1_proj"]
+[ext_resource type="PackedScene" uid="uid://dai3yfjoak8bi" path="res://assets/POLYGON WAR/FBX/SM_Wep_German_Grenade_01.glb" id="2_mesh"]
+
+[sub_resource type="SphereShape3D" id="ShapeGrenade"]
+radius = 0.22
+
+[node name="SlowProjectile" type="Area3D" groups=["shot_target"]]
+script = ExtResource("1_proj")
+collision_layer = 2
+collision_mask = 4
+monitoring = true
+monitorable = true
+
+[node name="Mesh" parent="." instance=ExtResource("2_mesh")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ShapeGrenade")
