@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://du5gacdrt2tvt"]
+
+[ext_resource type="Script" uid="uid://bflavorshootgd1" path="res://scripts/flavor_shootable.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://qqj30x7apsh8" path="res://assets/POLYGON WAR/FBX/SM_Prop_Barrel_01.glb" id="2_mesh"]
+
+[sub_resource type="CylinderShape3D" id="ShapeBody"]
+height = 1.2
+radius = 0.45
+
+[node name="FlavorShootable" type="Node3D" groups=["shot_target"]]
+script = ExtResource("1_script")
+
+[node name="Visual" parent="." instance=ExtResource("2_mesh")]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0)
+
+[node name="Body" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Body"]
+shape = SubResource("ShapeBody")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]

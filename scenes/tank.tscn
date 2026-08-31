@@ -16,6 +16,9 @@
 [ext_resource type="Script" uid="uid://btankshootgd01" path="res://scripts/tank_shoot.gd" id="14_shoot"]
 [ext_resource type="Script" uid="uid://bshotdummygd01" path="res://scripts/shot_dummy.gd" id="15_dummy"]
 [ext_resource type="PackedScene" uid="uid://csoldierscene1" path="res://scenes/soldier.tscn" id="18_soldier"]
+[ext_resource type="PackedScene" uid="uid://bflavorshootscn" path="res://scenes/flavor_shootable.tscn" id="19_flavor"]
+[ext_resource type="PackedScene" uid="uid://c2luh7crpgcfl" path="res://assets/POLYGON WAR/FBX/SM_Prop_Crate_01.glb" id="20_crate"]
+[ext_resource type="PackedScene" uid="uid://bmdxt3n3e2faj" path="res://assets/POLYGON WAR/FBX/SM_Env_Sign_01.glb" id="21_sign"]
 
 [sub_resource type="Environment" id="EnvGrey"]
 background_mode = 1
@@ -152,6 +155,9 @@ transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, -23, 0.16, 30)
 [node name="Pine3" parent="Farm" instance=ExtResource("8_pine")]
 transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 22, 0.16, 8)
 
+[node name="Barrel" parent="Farm" instance=ExtResource("19_flavor")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0.16, 26)
+
 [node name="Trench" type="Node3D" parent="."]
 
 [node name="Trench1" parent="Trench" instance=ExtResource("9_trench")]
@@ -178,6 +184,10 @@ transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 18, 0.16, -8)
 [node name="MoundL" parent="Trench" instance=ExtResource("11_mound")]
 transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, -18, 0.16, 4)
 
+[node name="Crate" parent="Trench" instance=ExtResource("19_flavor")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0.16, -3)
+prop_mesh = ExtResource("20_crate")
+
 [node name="Soldiers" type="Node3D" parent="."]
 
 [node name="Soldier1" parent="Soldiers" instance=ExtResource("18_soldier")]
@@ -193,6 +203,10 @@ transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, -19, 0.16, -28)
 
 [node name="Bunker" parent="Town" instance=ExtResource("13_bunker")]
 transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 22, 0.16, -42)
+
+[node name="Sign" parent="Town" instance=ExtResource("19_flavor")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0.16, -34)
+prop_mesh = ExtResource("21_sign")
 
 [node name="Hud" type="CanvasLayer" parent="."]
 
