@@ -19,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://bflavorshootscn" path="res://scenes/flavor_shootable.tscn" id="19_flavor"]
 [ext_resource type="PackedScene" uid="uid://c2luh7crpgcfl" path="res://assets/POLYGON WAR/FBX/SM_Prop_Crate_01.glb" id="20_crate"]
 [ext_resource type="PackedScene" uid="uid://bmdxt3n3e2faj" path="res://assets/POLYGON WAR/FBX/SM_Env_Sign_01.glb" id="21_sign"]
+[ext_resource type="PackedScene" uid="uid://bcombatcpscn01" path="res://scenes/combat_checkpoint.tscn" id="22_checkpoint"]
 
 [sub_resource type="Environment" id="EnvGrey"]
 background_mode = 1
@@ -190,11 +191,33 @@ prop_mesh = ExtResource("20_crate")
 
 [node name="Soldiers" type="Node3D" parent="."]
 
-[node name="Soldier1" parent="Soldiers" instance=ExtResource("18_soldier")]
+[node name="Soldier1" parent="Soldiers" groups=["wave_trench"] instance=ExtResource("18_soldier")]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.16, 0)
 
-[node name="Soldier2" parent="Soldiers" instance=ExtResource("18_soldier")]
+[node name="Soldier2" parent="Soldiers" groups=["wave_trench"] instance=ExtResource("18_soldier")]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0.16, -8)
+
+[node name="TownApproach" type="Node3D" parent="Soldiers"]
+
+[node name="TownSoldier1" parent="Soldiers/TownApproach" groups=["wave_town"] instance=ExtResource("18_soldier")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0.16, -32)
+
+[node name="TownSoldier2" parent="Soldiers/TownApproach" groups=["wave_town"] instance=ExtResource("18_soldier")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0.16, -36)
+
+[node name="Checkpoints" type="Node3D" parent="."]
+
+[node name="CP_Trench" parent="Checkpoints" instance=ExtResource("22_checkpoint")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 10)
+wave_group = &"wave_trench"
+
+[node name="CP_Town" parent="Checkpoints" instance=ExtResource("22_checkpoint")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -24)
+wave_group = &"wave_town"
 
 [node name="Town" type="Node3D" parent="."]
 

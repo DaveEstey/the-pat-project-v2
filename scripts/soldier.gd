@@ -1,20 +1,28 @@
 class_name Soldier
 extends Node3D
 
-## Fires slow grenades at the camera while alive and on-screen.
+## Fires slow grenades at the camera while armed, alive, and on-screen.
+
+const COLLISION_LAYER_SHOOTABLE: int = 8
 
 @export var projectile_scene: PackedScene
 @export var throw_interval: float = 2.4
 @export var muzzle: Marker3D
 
 var is_alive: bool = true
+var _armed: bool = false
 var _cooldown: float = 0.8
 
 @onready var _on_screen: VisibleOnScreenNotifier3D = $VisibleOnScreenNotifier3D
 
 
+func _ready() -> void:
+	if not _armed:
+		_set_body_shootable(false)
+
+
 func _physics_process(delta: float) -> void:
-	if not is_alive:
+	if not _armed or not is_alive:
 		return
 	_cooldown -= delta
 	if _cooldown > 0.0:
@@ -25,6 +33,16 @@ func _physics_process(delta: float) -> void:
 	_cooldown = throw_interval
 
 
+func activate() -> void:
+	if _armed or not is_alive:
+		return
+	_armed = true
+	if is_node_ready():
+		_set_body_shootable(true)
+	else:
+		call_deferred("_set_body_shootable", true)
+
+
 func take_shot() -> void:
 	down()
 
@@ -33,11 +51,16 @@ func down() -> void:
 	if not is_alive:
 		return
 	is_alive = false
-	var body := get_node_or_null("Body") as CollisionObject3D
-	if body != null:
-		body.collision_layer = 0
-		body.collision_mask = 0
+	_set_body_shootable(false)
 	visible = false
+
+
+func _set_body_shootable(enabled: bool) -> void:
+	var body := get_node_or_null("Body") as CollisionObject3D
+	if body == null:
+		return
+	body.collision_layer = COLLISION_LAYER_SHOOTABLE if enabled else 0
+	body.collision_mask = 0
 
 
 func _throw() -> void:
