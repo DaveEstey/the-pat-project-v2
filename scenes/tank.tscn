@@ -209,6 +209,28 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0.16, -32)
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0.16, -36)
 
+[node name="BunkerApproach" type="Node3D" parent="Soldiers"]
+
+[node name="BunkerSoldier1" parent="Soldiers/BunkerApproach" groups=["wave_bunker_1"] instance=ExtResource("18_soldier")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0.16, -45)
+throw_interval = 2.0
+
+[node name="BunkerSoldier2" parent="Soldiers/BunkerApproach" groups=["wave_bunker_1"] instance=ExtResource("18_soldier")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0.16, -55)
+throw_interval = 2.0
+
+[node name="BunkerSoldier3" parent="Soldiers/BunkerApproach" groups=["wave_bunker_2"] instance=ExtResource("18_soldier")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 0.16, -45)
+throw_interval = 2.0
+
+[node name="BunkerSoldier4" parent="Soldiers/BunkerApproach" groups=["wave_bunker_2"] instance=ExtResource("18_soldier")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58, 0.16, -62)
+throw_interval = 2.0
+
 [node name="Checkpoints" type="Node3D" parent="."]
 
 [node name="CP_Trench" parent="Checkpoints" instance=ExtResource("22_checkpoint")]
@@ -218,6 +240,14 @@ wave_group = &"wave_trench"
 [node name="CP_Town" parent="Checkpoints" instance=ExtResource("22_checkpoint")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -24)
 wave_group = &"wave_town"
+
+[node name="CP_Bunker1" parent="Checkpoints" instance=ExtResource("22_checkpoint")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 2, -50)
+wave_group = &"wave_bunker_1"
+
+[node name="CP_Bunker2" parent="Checkpoints" instance=ExtResource("22_checkpoint")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 2, -50)
+wave_group = &"wave_bunker_2"
 
 [node name="Town" type="Node3D" parent="."]
 
